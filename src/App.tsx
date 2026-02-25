@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { toPng } from 'html-to-image';
 import { 
   Copy, 
   Save, 
@@ -22,7 +23,9 @@ import {
   Building2,
   Smartphone,
   Share2,
-  Info
+  Info,
+  Image as ImageIcon,
+  Download
 } from 'lucide-react';
 import { ActivationRequest, PersistentRequesterInfo } from './types';
 
@@ -59,12 +62,14 @@ export default function App() {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [showSaveInfo, setShowSaveInfo] = useState(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
 
   // Refs for auto-focus navigation
   const inputRefs = useRef<{ [key: string]: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null }>({});
+  const formRef = useRef<HTMLDivElement>(null);
 
   // Load persistent requester info and history
   useEffect(() => {
@@ -166,18 +171,53 @@ export default function App() {
 
   const handleShare = async () => {
     const text = getFormattedText();
+    
+    // Try to share text first
     if (navigator.share) {
       try {
         await navigator.share({
           title: '센터방문 개통 요청서',
           text: text,
         });
+        return;
       } catch (err) {
+        // If user cancelled, don't show error
+        if ((err as Error).name === 'AbortError') return;
         console.error('Share failed:', err);
       }
-    } else {
-      handleCopy();
-      alert('공유 기능을 지원하지 않는 브라우저입니다. 내용이 복사되었습니다.');
+    }
+
+    // Fallback to clipboard
+    handleCopy();
+    alert('현재 브라우저에서 직접 공유 기능을 실행할 수 없습니다.\n내용이 복사되었으니, 팩스 앱이나 카카오톡에 붙여넣기 해주세요.\n\n(팁: "이미지 저장" 버튼을 눌러 사진으로 공유하는 것도 좋습니다!)');
+  };
+
+  const handleCapture = async () => {
+    if (formRef.current === null) return;
+    
+    setIsCapturing(true);
+    try {
+      // Small delay to ensure UI is ready
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const dataUrl = await toPng(formRef.current, {
+        cacheBust: true,
+        backgroundColor: '#F5F5F0',
+        pixelRatio: 2, // High quality
+      });
+      
+      const link = document.createElement('a');
+      link.download = `개통요청서_${formData.subscriberName || '미지정'}_${new Date().getTime()}.png`;
+      link.href = dataUrl;
+      link.click();
+      
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 2000);
+    } catch (err) {
+      console.error('Capture failed:', err);
+      alert('이미지 저장 중 오류가 발생했습니다. 브라우저 설정을 확인해주세요.');
+    } finally {
+      setIsCapturing(false);
     }
   };
 
@@ -315,6 +355,14 @@ export default function App() {
                 저장
               </button>
               <button 
+                onClick={handleCapture}
+                disabled={isCapturing}
+                className="flex items-center gap-2 px-4 py-2 bg-[#141414] text-white rounded-lg hover:bg-opacity-90 transition-colors shadow-md text-sm disabled:opacity-50"
+              >
+                {isCapturing ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <ImageIcon size={16} />}
+                이미지 저장
+              </button>
+              <button 
                 onClick={handleShare}
                 className="flex items-center gap-2 px-4 py-2 bg-[#141414] text-white rounded-lg hover:bg-opacity-90 transition-colors shadow-md text-sm"
                 title="모바일 팩스 앱 등으로 공유할 수 있습니다."
@@ -331,7 +379,8 @@ export default function App() {
           </div>
 
         {/* Form Content */}
-        <main className="bg-white border border-[#141414] shadow-xl overflow-hidden rounded-xl">
+        <div ref={formRef} className={isCapturing ? 'p-8 bg-[#F5F5F0]' : ''}>
+          <main className="bg-white border border-[#141414] shadow-xl overflow-hidden rounded-xl">
           <div className="p-1 bg-[#141414] text-white text-[10px] uppercase tracking-widest text-center">
             N Telecom Activation Request Form
           </div>
@@ -643,9 +692,9 @@ export default function App() {
                 </div>
               </div>
             </div>
-
           </div>
         </main>
+        </div>
 
         {/* Storage Info */}
         <div className="flex justify-center">
@@ -669,6 +718,7 @@ export default function App() {
               <p className="font-bold">데이터는 어디에 저장되나요?</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>요청 회원 정보</strong>: 입력 즉시 브라우저의 내부 저장소(LocalStorage)에 안전하게 보관됩니다. 앱을 껐다 켜도 유지됩니다.</li>
+                <li><strong>이미지 저장</strong>: 현재 작성된 내용을 사진 파일(PNG)로 저장합니다. 팩스 앱에서 파일을 선택할 때 이 사진을 사용하세요.</li>
                 <li><strong>공유 (팩스)</strong>: '공유' 버튼을 누르면 스마트폰의 공유 창이 뜹니다. 여기서 <strong>모바일 팩스</strong> 앱을 선택하여 바로 전송할 수 있습니다.</li>
                 <li><strong>주의</strong>: 브라우저 캐시를 삭제하거나 시크릿 모드를 사용하면 데이터가 사라질 수 있으니 중요한 내용은 별도로 복사해두세요.</li>
               </ul>
