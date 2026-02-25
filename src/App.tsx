@@ -381,7 +381,7 @@ export default function App() {
         {/* Form Content */}
         <div ref={formRef} className={isCapturing ? 'p-8 bg-[#F5F5F0]' : ''}>
           <main className="bg-white border border-[#141414] shadow-xl overflow-hidden rounded-xl">
-          <div className="p-1 bg-[#141414] text-white text-[10px] uppercase tracking-widest text-center">
+          <div className="p-1.5 bg-[#141414] text-white text-xs uppercase tracking-widest text-center">
             N Telecom Activation Request Form
           </div>
           
@@ -394,7 +394,7 @@ export default function App() {
               </div>
               <div className="col-span-3 grid grid-cols-2 divide-x divide-[#141414]">
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">회원번호</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">회원번호</div>
                   <input 
                     ref={el => inputRefs.current['salesMemberNo'] = el}
                     type="text" 
@@ -407,7 +407,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">회원명</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">회원명</div>
                   <input 
                     ref={el => inputRefs.current['salesMemberName'] = el}
                     type="text" 
@@ -429,7 +429,7 @@ export default function App() {
               </div>
               <div className="col-span-3 grid grid-cols-3 divide-x divide-[#141414]">
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">성명</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">성명</div>
                   <input 
                     ref={el => inputRefs.current['subscriberName'] = el}
                     type="text" 
@@ -442,7 +442,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">생년월일</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">생년월일</div>
                   <input 
                     ref={el => inputRefs.current['subscriberBirth'] = el}
                     type="text" 
@@ -456,7 +456,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">연락번호</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">연락번호</div>
                   <input 
                     ref={el => inputRefs.current['subscriberContact'] = el}
                     type="text" 
@@ -478,7 +478,7 @@ export default function App() {
               </div>
               <div className="col-span-3 grid grid-cols-3 divide-x divide-[#141414]">
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">망 선택</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">망 선택</div>
                   <select 
                     ref={el => inputRefs.current['network'] = el}
                     name="network"
@@ -492,7 +492,7 @@ export default function App() {
                   </select>
                 </div>
                 <div className="p-0 col-span-1">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">가입 요금제</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">가입 요금제</div>
                   <input 
                     ref={el => inputRefs.current['plan'] = el}
                     type="text" 
@@ -505,7 +505,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">번호이동 정보</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">번호이동 정보</div>
                   <input 
                     ref={el => inputRefs.current['portingInfo'] = el}
                     type="text" 
@@ -605,7 +605,7 @@ export default function App() {
               </div>
               <div className="col-span-3 grid grid-cols-2 divide-y divide-x divide-[#141414]">
                 <div className="p-0 border-t-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">회원번호</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">회원번호</div>
                   <input 
                     ref={el => inputRefs.current['requesterMemberNo'] = el}
                     type="text" 
@@ -618,7 +618,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0 border-t-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">회원명</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">회원명</div>
                   <input 
                     ref={el => inputRefs.current['requesterMemberName'] = el}
                     type="text" 
@@ -631,7 +631,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">소속 센터 / 활동 지역</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">소속 센터 / 활동 지역</div>
                   <input 
                     ref={el => inputRefs.current['requesterCenter'] = el}
                     type="text" 
@@ -644,7 +644,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">연락번호</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">연락번호</div>
                   <input 
                     ref={el => inputRefs.current['requesterContact'] = el}
                     type="text" 
@@ -666,7 +666,7 @@ export default function App() {
               </div>
               <div className="col-span-3 grid grid-cols-2 divide-x divide-[#141414]">
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">개통 센터</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">개통 센터</div>
                   <input 
                     ref={el => inputRefs.current['activationCenter'] = el}
                     type="text" 
@@ -679,7 +679,7 @@ export default function App() {
                   />
                 </div>
                 <div className="p-0">
-                  <div className="bg-[#F9F9F9] px-3 py-1 text-[10px] font-bold border-b border-[#141414] uppercase">개통 확정 번호</div>
+                  <div className="bg-[#F9F9F9] px-3 py-1.5 text-xs font-bold border-b border-[#141414] uppercase">개통 확정 번호</div>
                   <input 
                     ref={el => inputRefs.current['confirmedNumber'] = el}
                     type="text" 
